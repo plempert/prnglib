@@ -7,6 +7,7 @@
 
 #include "mad0.h"
 #include "mad0.c"
+#include "../pgl_rng.h"
 
 static const int ran_max = 100000;
 static const int ran_min = 1;

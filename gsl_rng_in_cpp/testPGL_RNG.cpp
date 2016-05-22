@@ -28,9 +28,9 @@ static const int BIG = 500000000;
 int main(){
     //pgl_rng_example();
     //cout << pgl_rng_mad0 << endl;
-//    dsfmt_test(12345);
+//    dsfmt_test(5);
     mad0_test((const unsigned char *)"abcd");
-    // tinymt_test(12345);
+     tinymt_test(5);
     
     return 0;
 }
@@ -43,7 +43,7 @@ void dsfmt_test(unsigned int seed){
     pgl_rng * r = pgl_rng_alloc(pgl_rng_dsfmt);
     pgl_rng_set(r, seed);
 
-    for(int i=0; i<10000; i++){
+    for(int i=0; i<10; i++){
         double old_rgn = old_dsfmt::genrand_close_open();
         double new_rng = pgl_rng_uniform(r);
         if(old_rgn!=new_rng) {
@@ -56,6 +56,22 @@ void dsfmt_test(unsigned int seed){
         }
         cout << old_rgn << " " << new_rng << endl;
     }
+
+    start();
+    printf("old time to generate %d ints: ", BIG);
+    for(int i=0; i<BIG; i++){
+        double o1 = (double)old_dsfmt::genrand_close_open();
+    }
+    stop();
+
+    start();
+    printf("new time to generate %d ints: ", BIG);
+    for(int i=0; i<BIG; i++){
+        double n = (double)pgl_rng_uniform(r);
+    }
+    stop();
+
+    fprintf(stdout, "--------------------\n");
 
     pgl_rng_free(r);
 }
@@ -109,11 +125,26 @@ void tinymt_test(unsigned int seed){
         unsigned int new_rng = pgl_rng_get(r);
         if(old_rgn!=new_rng) {
             cout << old_rgn << " " << new_rng << endl;
-            exit(0);
+            exit(1);
         }
         cout << old_rgn << endl;
-        cout << new_rng << endl;
     }
+
+    start();
+    printf("old time to generate %d ints: ", BIG);
+    for(int i=0; i<BIG; i++){
+        unsigned long int o1 = (unsigned long int)tinymt32_generate_uint32(generator);
+    }
+    stop();
+
+    start();
+    printf("new time to generate %d ints: ", BIG);
+    for(int i=0; i<BIG; i++){
+        unsigned long int n = (unsigned long int)pgl_rng_get(r);
+    }
+    stop();
+
+    fprintf(stdout, "--------------------\n");
 
     pgl_rng_free(r);
 }

@@ -5,6 +5,7 @@
 
 #include <string>
 using std::string;
+using std::cout;
 
 struct pgl_rng_type{
     // const char * name;
@@ -21,12 +22,16 @@ struct pgl_rng{
     const pgl_rng_type * type;
     bool seeded;
 
-    virtual void set(unsigned int seed){}
-    virtual void set(unsigned int * seed){}
-    virtual void set(const unsigned char * seed){}
-    virtual void set_type(string){}
-    virtual unsigned long int get_long(){}
-    virtual double get_double(){}    
+    virtual void set(unsigned int seed){error();}
+    virtual void set(unsigned int * seed){error();}
+    virtual void set(const unsigned char * seed){error();}
+    virtual void set_type(string){error();}
+    virtual unsigned long int get_long(){error();}
+    virtual double get_double(){error();}
+    void error(){
+        cout << "This function is not supported.\n";
+        exit(1);
+    }
 };
 
 const pgl_rng_type * pgl_rng_dsfmt = new pgl_rng_type();     
@@ -57,20 +62,17 @@ pgl_rng * pgl_rng_alloc(const pgl_rng_type * T){
 
     if(T == pgl_rng_dsfmt){
         r = new pglrng_dsfmt();
-        r->type = pgl_rng_dsfmt;
     } else if(T == pgl_rng_mad0){
         r = new pglrng_mad0();
-        r->type = pgl_rng_mad0;
     } else if(T == pgl_rng_tinymt){
         r = new pglrng_tinymt();
-        r->type = pgl_rng_tinymt;
     } else if(T == pgl_rng_well){
 
     } else if(T == pgl_rng_xorgens){
 
     }
 
-    
+    r->type = T;
     r->seeded = false;
 
     return r;
@@ -82,8 +84,6 @@ void pgl_rng_free (pgl_rng * r){
     */
     delete r->state;
     delete r;
-//    free(r->state);
-//    free(r);
 }
 
 void pgl_rng_set (pgl_rng * r, unsigned long int s){
