@@ -7,7 +7,7 @@
 
 #if !defined(SFMT_MEXP)
 #ifdef __GNUC__
-  #warning "SFMT_MEXP is not defined. I assume SFMT_MEXP is 19937."
+  // #warning "SFMT_MEXP is not defined. I assume SFMT_MEXP is 19937."
 #endif
   #define SFMT_MEXP 19937
 #endif

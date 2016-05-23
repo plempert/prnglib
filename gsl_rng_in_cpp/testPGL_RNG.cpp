@@ -28,9 +28,9 @@ static const int BIG = 500000000;
 int main(){
     //pgl_rng_example();
     //cout << pgl_rng_mad0 << endl;
-//    dsfmt_test(5);
-    mad0_test((const unsigned char *)"abcd");
-     tinymt_test(5);
+    dsfmt_test(5);
+//    mad0_test((const unsigned char *)"abcd");
+//     tinymt_test(5);
     
     return 0;
 }

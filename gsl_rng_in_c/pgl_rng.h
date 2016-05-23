@@ -3,6 +3,7 @@
 
 #include <stdlib.h> /* malloc, exit, calloc, free, */
 #include <stdio.h>  /* printf */
+#include "bool.h"   /* bool */
 
 typedef struct{
     const char * name;
@@ -10,6 +11,8 @@ typedef struct{
     unsigned long int min;
     int size;
     void (*set) (void * state, unsigned long int seed);
+    void (*set2) (void * state, int n, const unsigned char * seed);
+    void (*set3) (void * state, unsigned int * seed);
     unsigned long int (*get) (void * state);
     double (*get_double) (void *state);
 } gsl_rng_type;
@@ -17,7 +20,6 @@ typedef struct{
 typedef struct{
     void * state;
     const gsl_rng_type * type;
-//    int seeded;
 } gsl_rng;
 
 extern const gsl_rng_type * gsl_rng_dsfmt;     
@@ -33,11 +35,11 @@ extern const gsl_rng_type * gsl_rng_xorgens;
 //#include "xorgens/pgl_rng_xorgens.c"
 
 unsigned long int gsl_rng_default_seed;
-void gsl_rng_set(const gsl_rng * r, unsigned long int seed);
-
 
 gsl_rng * gsl_rng_alloc(const gsl_rng_type * T);
-void gsl_rng_set (const gsl_rng * r, unsigned long int seed);
+void gsl_rng_set (const gsl_rng * r, unsigned long int seed);       /* For tinymt, dsfmt, xorgens */
+void gsl_rng_set2 (const gsl_rng * r, int n, const unsigned char * seed);   /* For MaD0 generator */
+void gsl_rng_set3 (const gsl_rng * r, unsigned int * seed);          /* For WELL generator */
 void gsl_rng_free (gsl_rng * r);
 unsigned long int gsl_rng_get (const gsl_rng * r);
 double gsl_rng_uniform (const gsl_rng * r);

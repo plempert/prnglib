@@ -11,7 +11,7 @@ using namespace std::chrono;
 using std::string;
 
 int main(){
-    int seed_value = 26341;  // An arbitrary seed value
+    int seed_value = 5;  // An arbitrary seed value
 
     xor4096i(seed_value);   // Seed the original number generator
     
@@ -20,7 +20,7 @@ int main(){
     rng->set(seed_value);   // Set the seed value
 
     // Test that the generators produce the same values for 100 million iterations
-    for(int i=0; i<10000; i++){
+    for(int i=0; i<5; i++){
         unsigned long original_generator = xor4096i(0);
         unsigned long PRNGFactory_generator = rng->get_long();
         std::cout << original_generator << " " << PRNGFactory_generator << "\n";
@@ -35,21 +35,21 @@ int main(){
     
     // Measure the time it takes the original generator to produce 1 billion values
     t1 = high_resolution_clock::now();
-    for(int i=0; i<1000000000; i++){
+    for(int i=0; i<500000000; i++){
         unsigned long original_stream = xor4096i(0);
     }
     t2 = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>( t2 - t1 ).count();
-    std::cout << "Original xorgens generator used "<< duration << " microseconds to generate 1 billion values" << std::endl;
+    std::cout << "Original xorgens generator used "<< duration/1000000.0 << " seconds to generate 500000000 values" << std::endl;
 
     // Measure the time it takes the original generator to produce 1 billion values
     t1 = high_resolution_clock::now();
-    for(int i=0; i<1000000000; i++){
+    for(int i=0; i<500000000; i++){
         unsigned long PRNG_stream = rng->get_long();
     }
     t2 = high_resolution_clock::now();
     duration = duration_cast<microseconds>( t2 - t1 ).count();
-    std::cout << "PRNGFactory xorgens generator used "<< duration << " microseconds to generate 1 billion values" << std::endl;
+    std::cout << "PRNGFactory xorgens generator used "<< duration/1000000.0 << " seconds to generate 500000000 values" << std::endl;
 
 
     // print("Original xorgens generator:");

@@ -8,14 +8,14 @@ using namespace std::chrono;
 int main(){
 
     mad0* gen = new mad0();
-    const unsigned char * key = (const unsigned char *)"1234";
+    const unsigned char * key = (const unsigned char *)"abcd";
     //initialize the generator using the key "abcd"
     initGenFrKey(gen, 4, key);
 
     PRNG* rng = PRNGFactory::generatePRNG("mad0");
-    rng->set("1234", 4);
+    rng->set("abcd", 4);
 
-    for(int i=0; i<100000; i++){
+    for(int i=0; i<5; i++){
         unsigned int original_generator = generateUint32(gen);
         unsigned int PRNGFactory_generator = rng->get_int();
         std::cout << original_generator << " " << PRNGFactory_generator << "\n";

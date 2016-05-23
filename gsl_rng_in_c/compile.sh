@@ -1,3 +1,3 @@
-gcc -c testPGL_RNG.c tinymt/pgl_rng_tinymt.c MaD0/pgl_rng_mad0.c pgl_rng.c
-gcc testPGL_RNG.o pgl_rng_tinymt.o pgl_rng_mad0.o pgl_rng.o -o main
+gcc -c xorgens/xorgens.c xorgens/xorgens_rng.c xorgens/pgl_rng_xorgens.c  well/WELL1024a.c well/well_rng.c well/pgl_rng_well.c dsfmt/dSFMT.c dsfmt/pgl_rng_dsfmt.c testPGL_RNG.c tinymt/pgl_rng_tinymt.c MaD0/pgl_rng_mad0.c pgl_rng.c
+gcc xorgens.o xorgens_rng.o pgl_rng_xorgens.o WELL1024a.o well_rng.o pgl_rng_well.o testPGL_RNG.o pgl_rng_tinymt.o pgl_rng_mad0.o pgl_rng.o dSFMT.o pgl_rng_dsfmt.o -o main
 echo "run using ./main"

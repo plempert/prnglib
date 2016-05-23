@@ -17,6 +17,8 @@
 
    For type definitions see xorgens.h */
 
+#include "xorgens.h"
+
 UINT xor4096i(UINT seed)
 
   {
@@ -50,11 +52,24 @@ UINT xor4096i(UINT seed)
 #define d    (29*UINT64 +  15*UINT32)
 #define ws   (27*UINT64 +  16*UINT32) 
 
-  static UINT w, weyl, zero = 0, x[r];
+  static UINT w=0, weyl=0, zero = 0, x[r]={0};
   UINT t, v;
   static int i = -1 ;              /* i < 0 indicates first call */
   int k;
-  
+
+//  /*
+//   * Print state
+//   */
+//  printf("old\n");
+//  printf("w=%lu ", w);
+//  printf("weyl=%lu ", weyl);
+//  printf("i=%d\n", i);
+//  for(int i=0; i<r; i++){
+//    printf("%lu ", x[i]);
+//  }
+//  printf("\n\n");
+
+
   if ((i < 0) || (seed != zero)) { /* Initialisation necessary */
   
   /* weyl = odd approximation to 2**wlen*(3-sqrt(5))/2. */
@@ -64,7 +79,7 @@ UINT xor4096i(UINT seed)
     else 
       weyl = ((((UINT)0x61c88646)<<16)<<16) + (UINT)0x80b583eb;
                  
-    v = (seed!=zero)? seed:~seed;  /* v must be nonzero */
+    v = (seed!=zero)?seed:~seed;  /* v must be nonzero */
 
     for (k = wlen; k > 0; k--) {   /* Avoid correlations for close seeds */
       v ^= v<<10; v ^= v>>15;      /* Recurrence has period 2**wlen-1 */ 

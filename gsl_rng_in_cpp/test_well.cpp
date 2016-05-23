@@ -21,7 +21,7 @@ int main(){
     PRNG* rng = PRNGFactory::generatePRNG("well");
     rng->set(seed_value);
     
-    for(int i=0; i<100000; i++){
+    for(int i=0; i<10; i++){
         double original_generator = WELLRNG1024a();
         double PRNGFactory_generator = rng->get_double();
         std::cout << original_generator << " " << PRNGFactory_generator << "\n";

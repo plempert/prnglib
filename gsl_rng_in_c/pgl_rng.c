@@ -37,10 +37,15 @@ gsl_rng * gsl_rng_alloc(const gsl_rng_type * T){
 
 }
 
-void gsl_rng_set (const gsl_rng * r, unsigned long int seed){
+void gsl_rng_set (const gsl_rng * r, unsigned long int seed){       /* For tinymt, dsfmt, xorgens */
     (r->type->set) (r->state, seed);
 }
-
+void gsl_rng_set2 (const gsl_rng * r, int n, const unsigned char * seed) {  /* For MaD0 generator */
+    (r->type->set2) (r->state, n, seed);
+}
+void gsl_rng_set3 (const gsl_rng * r, unsigned int * seed) {         /* For WELL generator */
+    (r->type->set3) (r->state, seed);
+}
 void gsl_rng_free (gsl_rng * r) {
     if(!r) return;
     free (r->state);

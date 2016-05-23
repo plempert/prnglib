@@ -3,7 +3,7 @@
 
 #include "dsfmt/dsfmtnew.h"
 #include "dsfmt/dsfmtnew.c"
-#include "pgl_rng.h"
+#include "PRNGFactory.h"
 
 #include <string>
 using std::string;

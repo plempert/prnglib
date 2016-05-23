@@ -62,17 +62,17 @@
   #define UINT64_C(v) (v ## ULL) 
 #endif
 
-#ifdef __GNUC__
-inline double genrand_close1_open2(void);
-inline static double genrand_close_open(void) __attribute__((always_inline));
-inline static double genrand_open_close(void) __attribute__((always_inline));
-inline static double genrand_open_open(void) __attribute__((always_inline));
-#else
-inline double genrand_close1_open2(void);
+//#ifdef __GNUC__
+//inline double genrand_close1_open2(void);
+//inline static double genrand_close_open(void) __attribute__((always_inline));
+//inline static double genrand_open_close(void) __attribute__((always_inline));
+//inline static double genrand_open_open(void) __attribute__((always_inline));
+//#else
+double genrand_close1_open2(void);
 inline static double genrand_close_open(void);
 inline static double genrand_open_close(void);
 inline static double genrand_open_open(void);
-#endif
+//#endif
 
 void fill_array_open_close(double array[], int size);
 void fill_array_close_open(double array[], int size);

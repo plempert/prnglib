@@ -5,23 +5,46 @@
 #ifndef pgl_rng_xorgens_c
 #define pgl_rng_xorgens_c
 
-static int ran_max = 1000;
-static int ran_min = 1;
+#include "xorgens_rng.h"
+#include "../pgl_rng.h"
+
+static const char * name = "xorgens";
+static const int ran_max = 1000;
+static const int ran_min = 1;
 static inline unsigned long int ran_get (void *vstate);
 static double ran_get_double (void *vstate);
 static void ran_set (void *state, unsigned long int s);
 
-static inline unsigned long int ran_get (void *vstate){}
-static double ran_get_double (void *vstate){}
-static void ran_set (void *vstate, unsigned long int s){}
+static inline unsigned long int ran_get (void *vstate){
+    return (unsigned long int)rng_xor4096i((xorgens *)vstate, 0);
+}
+static double ran_get_double (void *vstate){
+    return (double)rng_xor4096r((xorgens *)vstate, 0);
+}
+static void ran_set1 (void *vstate, unsigned long int s){
+    rng_xor4096i((xorgens *)vstate, (int)s);
+}
+static void ran_set2 (void *vstate, int n, const unsigned char * s){
+    printf("%s generator does not support a seed string", name);
+    exit(1);
+}
+static void ran_set3 (void *vstate, unsigned int * s){
+    printf("%s generator does not support an seed array", name);
+    exit(1);
+}
+
+
+
 static const gsl_rng_type ran_type = {
-        "xorgens",                 /* name */
-        ran_max,                /* RAND_MAX */
-        ran_min,                /* RAND_MIN */
-        sizeof (ran_state_t),
-        &ran_set,
-        &ran_get,
-        &ran_get_double
+        "xorgens",              /* const char * name; */
+        ran_max,                /* unsigned long int max; */
+        ran_min,                /* unsigned long int min; */
+        sizeof(xorgens),        /* int size; */
+        &ran_set1,              /* void (*set) (void * state, unsigned long int seed); */
+        &ran_set2,
+        &ran_set3,
+        &ran_get,               /* unsigned long int (*get) (void * state); */
+        &ran_get_double         /* double (*get_double) (void *state); */
 };
 
 const gsl_rng_type *gsl_rng_xorgens = &ran_type;
